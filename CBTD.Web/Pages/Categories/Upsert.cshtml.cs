@@ -30,5 +30,31 @@ namespace CBTD.Web.Pages.Categories
             }
             return Page();
         }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            //if this is a new category
+            if (ObjCategory.Id == 0)
+            {
+                _db.Categories.Add(ObjCategory);
+                TempData["success"] = "Category added Successfully";
+            }
+            //if category exists
+            else
+            {
+                _db.Categories.Update(ObjCategory);
+                TempData["success"] = "Category updated Successfully";
+            }
+                _db.SaveChanges();
+
+            return RedirectToPage("./Index");
+	    }
+
+
     }
 }
