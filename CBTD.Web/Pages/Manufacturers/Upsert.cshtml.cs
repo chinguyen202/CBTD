@@ -1,15 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CBTD.DataAccess.Data;
 using CBTD.Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 
-namespace CBTD.Web.Pages.Categories
+namespace CBTD.Web.Pages.Manufacturers
 {
     public class Upsert : PageModel
     {
         private readonly ApplicationDbContext _db;
         [BindProperty]  //synchonizes form fields with values in code behind
-        public Category ObjCategory { get; set; }
+        public Manufacturer ObjManufacturer { get; set; }
 
 
         public Upsert(ApplicationDbContext db)
@@ -19,12 +24,12 @@ namespace CBTD.Web.Pages.Categories
 
         public IActionResult OnGet(int? id)
         {
-            ObjCategory = new Category();
+            ObjManufacturer = new Manufacturer();
             if(id != 0)
             {
-                ObjCategory = _db.Categories.Find(id);
+                ObjManufacturer = _db.Manufacturers.Find(id);
             }
-            if(ObjCategory == null)
+            if(ObjManufacturer == null)
             {
                 return NotFound();
             }
@@ -38,17 +43,17 @@ namespace CBTD.Web.Pages.Categories
                 return Page();
             }
 
-            //if this is a new category
-            if (ObjCategory.Id == 0)
+            //if this is a new Manufacturer
+            if (ObjManufacturer.Id == 0)
             {
-                _db.Categories.Add(ObjCategory);
-                TempData["success"] = "Category added Successfully";
+                _db.Manufacturers.Add(ObjManufacturer);
+                TempData["success"] = "Manufacturer added Successfully";
             }
-            //if category exists
+            //if Manufacturer exists
             else
             {
-                _db.Categories.Update(ObjCategory);
-                TempData["success"] = "Category updated Successfully";
+                _db.Manufacturers.Update(ObjManufacturer);
+                TempData["success"] = "Manufacturer updated Successfully";
             }
                 _db.SaveChanges();
 

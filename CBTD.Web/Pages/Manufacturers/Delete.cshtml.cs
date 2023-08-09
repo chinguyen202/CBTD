@@ -3,28 +3,28 @@ using CBTD.Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CBTD.Web.Pages.Categories
+namespace CBTD.Web.Pages.Manufacturers
 {
-    public class Upsert : PageModel
+    public class Delete : PageModel
     {
         private readonly ApplicationDbContext _db;
         [BindProperty]  //synchonizes form fields with values in code behind
-        public Category ObjCategory { get; set; }
+        public Manufacturer ObjManufacturer { get; set; }
 
 
-        public Upsert(ApplicationDbContext db)
+        public Delete(ApplicationDbContext db)
         {
             _db = db;
         }
 
         public IActionResult OnGet(int? id)
         {
-            ObjCategory = new Category();
+            ObjManufacturer = new Manufacturer();
             if(id != 0)
             {
-                ObjCategory = _db.Categories.Find(id);
+                ObjManufacturer = _db.Manufacturers.Find(id);
             }
-            if(ObjCategory == null)
+            if(ObjManufacturer == null)
             {
                 return NotFound();
             }
@@ -38,17 +38,17 @@ namespace CBTD.Web.Pages.Categories
                 return Page();
             }
 
-            //if this is a new category
-            if (ObjCategory.Id == 0)
+            //if this is a new Manufacturer
+            if (ObjManufacturer.Id == 0)
             {
-                _db.Categories.Add(ObjCategory);
-                TempData["success"] = "Category added Successfully";
+                _db.Manufacturers.Add(ObjManufacturer);
+                TempData["success"] = "Manufacturer added Successfully";
             }
-            //if category exists
+            //if Manufacturer exists
             else
             {
-                _db.Categories.Update(ObjCategory);
-                TempData["success"] = "Category updated Successfully";
+                _db.Manufacturers.Remove(ObjManufacturer);
+                TempData["success"] = "Manufacturer deleted Successfully";
             }
                 _db.SaveChanges();
 
