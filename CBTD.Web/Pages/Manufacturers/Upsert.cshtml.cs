@@ -1,5 +1,6 @@
 using CBTD.DataAccess.Data;
 using CBTD.DataAccess.Models;
+using CBTD.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,14 +8,14 @@ namespace CBTD.Web.Pages.Manufacturers
 {
     public class Upsert : PageModel
     {
-        private readonly ApplicationDbContext _db;
+        private readonly UnitOfWork _unitOfWork;
         [BindProperty]  //synchonizes form fields with values in code behind
         public Manufacturer ObjManufacturer { get; set; }
 
 
-        public Upsert(ApplicationDbContext db)
+        public Upsert(UnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult OnGet(int? id)
@@ -22,7 +23,7 @@ namespace CBTD.Web.Pages.Manufacturers
             ObjManufacturer = new Manufacturer();
             if(id != 0)
             {
-                ObjManufacturer = _db.Manufacturers.Find(id);
+                ObjManufacturer = _unitOfWork.Manufacturer.GetById(id); 
             }
             if(ObjManufacturer == null)
             {
@@ -41,16 +42,16 @@ namespace CBTD.Web.Pages.Manufacturers
             //if this is a new Manufacturer
             if (ObjManufacturer.Id == 0)
             {
-                _db.Manufacturers.Add(ObjManufacturer);
+                _unitOfWork.Manufacturer.Add(ObjManufacturer);
                 TempData["success"] = "Manufacturer added Successfully";
             }
             //if Manufacturer exists
             else
             {
-                _db.Manufacturers.Update(ObjManufacturer);
+                _unitOfWork.Manufacturer.Update(ObjManufacturer);
                 TempData["success"] = "Manufacturer updated Successfully";
             }
-                _db.SaveChanges();
+                _unitOfWork.Commit();
 
             return RedirectToPage("./Index");
 	    }

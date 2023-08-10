@@ -1,5 +1,6 @@
 using CBTD.DataAccess.Data;
 using CBTD.DataAccess.Models;
+using CBTD.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,14 +8,14 @@ namespace CBTD.Web.Pages.Categories
 {
     public class Delete : PageModel
     {
-        private readonly ApplicationDbContext _db;
+        private readonly UnitOfWork _unitOfWork;
         [BindProperty]
         public  Category ObjCategory { get; set; }
 
  
-        public Delete(ApplicationDbContext db)
+        public Delete(UnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
             ObjCategory = new ();
         }
 
@@ -23,7 +24,7 @@ namespace CBTD.Web.Pages.Categories
             ObjCategory = new Category();
             if(id != 0)
             {
-                ObjCategory = _db.Categories.Find(id);
+                ObjCategory = _unitOfWork.Category.GetById(id);
             }
             if(ObjCategory == null)
             {
@@ -42,16 +43,16 @@ namespace CBTD.Web.Pages.Categories
             //if this is a new category
             if (ObjCategory.Id == 0)
             {
-                _db.Categories.Add(ObjCategory);
+                _unitOfWork.Category.Add(ObjCategory);
                 TempData["success"] = "Category added Successfully";
             }
             //if category exists
             else
             {
-                _db.Categories.Remove(ObjCategory);
+                _unitOfWork.Category.Delete(ObjCategory);
                 TempData["success"] = "Category deleted Successfully";
             }
-                _db.SaveChanges();
+            _unitOfWork.Commit(); 
 
             return RedirectToPage("./Index");
 	    }

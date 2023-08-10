@@ -14,6 +14,8 @@ namespace CBTD.Infrastructure
         }
 
         private IGenericRepository<Category> _Category;
+        private IGenericRepository<Manufacturer> _Manufacturer;
+        private IGenericRepository<Product> _Product;
         //ADD ADDITIONAL MODELS HERE
 
         public IGenericRepository<Category> Category
@@ -29,8 +31,36 @@ namespace CBTD.Infrastructure
                 return _Category;
             }
         }
+        public IGenericRepository<Manufacturer> Manufacturer
+        {
+            get
+            {
 
-        public IGenericRepository<Manufacturer> Manufacturer => throw new NotImplementedException();
+                if (_Manufacturer == null)
+                {
+                    _Manufacturer = new GenericRepository<Manufacturer>(_dbContext);
+                }
+
+                return _Manufacturer;
+            }
+        }
+        public IGenericRepository<Product> Product
+        {
+            get
+            {
+
+                if (_Product == null)
+                {
+                    _Product = new GenericRepository<Product>(_dbContext);
+                }
+
+                return _Product;
+            }
+        }
+
+        // public IGenericRepository<Manufacturer> Manufacturer => throw new NotImplementedException();
+
+        // public IGenericRepository<Product> Product => throw new NotImplementedException();
 
         //ADD ADDITIONAL METHODS FOR EACH MODEL (similar to Category) HERE
 
