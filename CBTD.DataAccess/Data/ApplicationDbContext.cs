@@ -1,4 +1,4 @@
-using CBTD.Infrastructure.Models;
+using CBTD.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CBTD.DataAccess.Data

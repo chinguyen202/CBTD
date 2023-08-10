@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CBTD.Infrastructure.Models
+namespace CBTD.DataAccess.Models
 {
     public class Manufacturer
     {
