@@ -1,0 +1,157 @@
+@page
+@model CBTD.Web.Pages.Products.Upsert
+@{
+    
+}
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+	<input asp-for="ObjProduct".Id" hidden />
+	<input asp-for="ObjProduct.ImageUrl" hidden />
+
+	<div class="row">
+		<div class="col-10">
+			<div class="border p-3 mt-4 row">
+				<div class="col-12 pb-2">
+					<h2 class="text-primary"> Product</h2>
+					<hr />
+				</div>
+
+				<div class="mb-3">
+					<label asp-for="ObjProduct.Name"></label>
+					<input id=”txtName” asp-for="ObjProduct.Name" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label asp-for="ObjProduct.Description"></label>
+					<textarea asp-for="ObjProduct.Description" rows="3" class="form-control"></textarea>
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.UPC"></label>
+					<input id=”txtUPC” asp-for="ObjProduct.UPC" class="form-control" />
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.Size"></label>
+					<input asp-for="ObjProduct.Size" class="form-control" />
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.ListPrice"></label>
+					<input id=”txtListPrice” asp-for="ObjProduct.ListPrice" class="form-control" />
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.UnitPrice"></label>
+					<input id=”txtUnitPrice” asp-for="ObjProduct.UnitPrice" class="form-control" />
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.HalfDozenPrice"></label>
+					<input id=”txtHalfDozenPrice” asp-for="ObjProduct.HalfDozenPrice" class="form-control" />
+				</div>
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.DozenPrice"></label>
+					<input id=”txtDozenPrice” asp-for="ObjProduct.DozenPrice" class="form-control" />
+				</div>
+				<div class="mb-3">
+					<label asp-for="ObjProduct.ImageUrl"></label>
+					<input type="file" id="uploadBox" name="file" class="form-control" />
+				</div>
+
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.CategoryId"></label>
+					<select id=”ddlCategory” asp-for="ObjProduct.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+						<option disabled selected>--Select Category--</option>
+					</select>
+				</div>
+
+				<div class="mb-3 col-6">
+					<label asp-for="ObjProduct.ManufacturerId"></label>
+					<select id=”ddlManufacturer” asp-for="ObjProduct.ManufacturerId" asp-items="@Model.ManufacturerList" class="form-select">
+						<option disabled selected>--Select CoverType--</option>
+					</select>
+				</div>
+				<div class="col-12">
+					@if (Model.ObjProduct.Id != 0)
+					{
+						<button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+					}
+					else
+					{
+						<button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+					}
+					<a  asp-page="Index" class="btn btn-secondary" style="width:150px">
+						Back to List
+					</a>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-2 pt-4">
+			<img src="Model.ObjProduct.ImageUrl"
+				 width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+		</div>
+	</div>
+</form>
+
+@section Scripts{
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			plugins: "lists",
+			menubar: "file edit format"
+		});
+
+		function ValidateInput() {
+
+
+
+			if (document.getElementById('txtName').value == "") {
+				swal.fire('Error', 'Please Enter a Product Name', 'error');
+				return false;
+			}
+
+			if (document.getElementById('txtUPC').value == "") {
+				swal.fire('Error', 'Please Enter a Product UPC', 'error');
+				return false;
+			}
+
+			if ($('#txtUnitPrice').val() < .01) {
+				swal.fire('Error', 'Please Enter a Unit Price Greater Than $.01', 'error');
+				return false;
+			}
+
+			if ($('#txtListPrice').val() < .01) {
+				swal.fire('Error', 'Please Enter a List Price Greater Than $.01', 'error');
+				return false;
+			}
+
+			if ($('#txtHalfDozenPrice').val() < .01) {
+				swal.fire('Error', 'Please Enter a Half Dozen+ Price Greater Than $.01', 'error');
+				return false;
+			}
+
+			if ($('#txtDozenPrice').val() < .01) {
+				swal.fire('Error', 'Please Enter a Dozen+ Price Greater Than $.01', 'error');
+				return false;
+			}
+
+			if (tinyMCE.get('txtDesc').getContent() == "") {
+				swal.fire('Error', 'Please Enter a Product Description', 'error');
+				return false;
+			}
+
+			if (document.getElementById("uploadBox").value == "") {
+				swal.fire('Error', 'Please Select an Image', 'error')
+				return false
+			}
+
+			if ($('#ddlCategory option:selected').val() == 0) {
+				swal.fire('Error', 'Please Select a Catagory', 'error')
+				return false
+			}
+
+			if ($('#ddlManufacturer option:selected').val() == 0) {
+				swal.fire('Error', 'Please Select a Manufacturer', 'error')
+				return false
+			}
+
+			return true;
+		}
+	</script>
+}
