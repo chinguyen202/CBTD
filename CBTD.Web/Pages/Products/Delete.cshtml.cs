@@ -2,6 +2,7 @@ using CBTD.DataAccess.Models;
 using CBTD.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CBTD.Web.Pages.Products
 {
@@ -10,7 +11,8 @@ namespace CBTD.Web.Pages.Products
         private readonly UnitOfWork _unitOfWork;
         [BindProperty]
         public  Product ObjProduct { get; set; }
-
+        public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public IEnumerable<SelectListItem> ManufacturerList { get; set; }
  
         public Delete(UnitOfWork unitOfWork)
         {

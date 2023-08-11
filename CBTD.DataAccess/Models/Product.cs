@@ -60,6 +60,6 @@ namespace CBTD.DataAccess.Models
 
         [ForeignKey("ManufacturerId")]
         public Manufacturer? Manufacturer { get; set; }
-
     }
+
 }

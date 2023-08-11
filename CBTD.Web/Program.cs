@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using CBTD.DataAccess.Data;
 using CBTD.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
     builder.Configuration.GetConnectionString("PostgresConnection")
 ));
+
 builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
