@@ -16,6 +16,8 @@ namespace CBTD.Infrastructure
         private IGenericRepository<Category> _Category;
         private IGenericRepository<Manufacturer> _Manufacturer;
         private IGenericRepository<Product> _Product;
+
+        private IGenericRepository<ApplicationUser> _ApplicationUser;
         //ADD ADDITIONAL MODELS HERE
 
         public IGenericRepository<Category> Category
@@ -55,6 +57,20 @@ namespace CBTD.Infrastructure
                 }
 
                 return _Product;
+            }
+        }
+        
+        public IGenericRepository<ApplicationUser> ApplicationUser
+        {
+            get
+            {
+
+                if (_Category == null)
+                {
+                    _Category = new GenericRepository<Category>(_dbContext);
+                }
+
+                return _ApplicationUser;
             }
         }
 

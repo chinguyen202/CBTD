@@ -97,12 +97,12 @@
 		});
 
 		function ValidateInput() {
-			if (document.getElementById('txtName').value == "") {
+			if (document.getElementById('txtName').value === "") {
 				swal.fire('Error', 'Please Enter a Product Name', 'error');
 				return false;
 			}
 
-			if (document.getElementById('txtUPC').value == "") {
+			if (document.getElementById('txtUPC').value === "") {
 				swal.fire('Error', 'Please Enter a Product UPC', 'error');
 				return false;
 			}
@@ -127,22 +127,22 @@
 				return false;
 			}
 
-			if (tinyMCE.get('txtDesc').getContent() == "") {
+			if (tinyMCE.get('txtDesc').getContent() === "") {
 				swal.fire('Error', 'Please Enter a Product Description', 'error');
 				return false;
 			}
 
-			if (document.getElementById("uploadBox").value == "") {
+			if (document.getElementById("uploadBox").value === "") {
 				swal.fire('Error', 'Please Select an Image', 'error')
 				return false
 			}
 
-			if ($('#ddlCategory option:selected').val() == 0) {
+			if ($('#ddlCategory option:selected').val() === 0) {
 				swal.fire('Error', 'Please Select a Category', 'error')
 				return false
 			}
 
-			if ($('#ddlManufacturer option:selected').val() == 0) {
+			if ($('#ddlManufacturer option:selected').val() === 0) {
 				swal.fire('Error', 'Please Select a Manufacturer', 'error')
 				return false
 			}

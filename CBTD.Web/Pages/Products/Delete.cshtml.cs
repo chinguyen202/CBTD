@@ -9,53 +9,49 @@ namespace CBTD.Web.Pages.Products
     public class Delete : PageModel
     {
         private readonly UnitOfWork _unitOfWork;
-        [BindProperty]
-        public  Product ObjProduct { get; set; }
+        [BindProperty]  //synchonizes form fields with values in code behind
+        public Product ObjProduct { get; set; }
         public IEnumerable<SelectListItem> CategoryList { get; set; }
         public IEnumerable<SelectListItem> ManufacturerList { get; set; }
- 
+
         public Delete(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            ObjProduct = new ();
         }
 
         public IActionResult OnGet(int? id)
         {
             ObjProduct = new Product();
-            if(id != 0)
-            {
-                ObjProduct = _unitOfWork.Product.GetById(id);
-            }
-            if(ObjProduct == null)
-            {
-                return NotFound();
-            }
+            CategoryList = _unitOfWork.Category.GetAll()
+                .Select(c => new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.Id.ToString()
+                    }
+                );
+            ManufacturerList = _unitOfWork.Manufacturer.GetAll()
+                .Select(m => new SelectListItem
+                    {
+                        Text = m.Name,
+                        Value = m.Id.ToString()
+                    }
+                );
+
+            ObjProduct = _unitOfWork.Product.GetById(id);
+
             return Page();
         }
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
-            //if this is a new Product
-            if (ObjProduct.Id == 0)
-            {
-                _unitOfWork.Product.Add(ObjProduct);
-                TempData["success"] = "Product added Successfully";
-            }
-            //if Product exists
-            else
-            {
-                _unitOfWork.Product.Delete(ObjProduct);
-                TempData["success"] = "Product deleted Successfully";
-            }
-            _unitOfWork.Commit(); 
+            _unitOfWork.Product.Delete(ObjProduct);
+            TempData["success"] = "Product deleted Successfully";
+
+            _unitOfWork.Commit();
 
             return RedirectToPage("./Index");
-	    }
+        }
+
     }
 }
