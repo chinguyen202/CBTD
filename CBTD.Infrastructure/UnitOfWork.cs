@@ -7,18 +7,20 @@ namespace CBTD.Infrastructure
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _dbContext;  //dependency injection of Data Source
-
+        private readonly OrderHeaderRepository _orderHeader;
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+            _orderHeader = new OrderHeaderRepository(_dbContext);
         } 
 
         private IGenericRepository<Category> _category;
         private IGenericRepository<Manufacturer> _manufacturer;
         private IGenericRepository<Product> _product;
         private IGenericRepository<ShoppingCart> _shoppingCart;
-
         private IGenericRepository<ApplicationUser> _applicationUser;
+        public IOrderHeaderRepository<OrderHeader> OrderHeader { get; set; }
+
         //ADD ADDITIONAL MODELS HERE
 
         public IGenericRepository<Category> Category
@@ -87,7 +89,8 @@ namespace CBTD.Infrastructure
                 return _shoppingCart;
             }
         }
-        
+
+
 
         // public IGenericRepository<Manufacturer> Manufacturer => throw new NotImplementedException();
 

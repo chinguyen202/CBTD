@@ -10,6 +10,8 @@ namespace CBTD.Infrastructure.Interfaces
         public IGenericRepository<ApplicationUser> ApplicationUser { get; }
         
         public IGenericRepository<ShoppingCart> ShoppingCart { get; }
+        public IOrderHeaderRepository<OrderHeader> OrderHeader { get; set; }
+
 
 	    //ADD other Models/Tables here as you create them
       
