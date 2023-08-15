@@ -24,18 +24,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
-                                                    <a class="nav-link text-white-50 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Managment</a>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" asp-area="" asp-page="/Categories/Index">Category</a>
-                                                        <a class="dropdown-item" asp-area="" asp-page="/Manufacturers/Index">Manufactuer</a>
-                                                        <a class="dropdown-item" asp-area="" asp-page="/Products/Index">Product</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" asp-area="" asp-page="">Users</a>
-                                                        <a class="dropdown-item" asp-area="" asp-page="">Roles</a>
-                                                    </div>
-                                                </li>
+                            <a class="nav-link text-white-50 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Managment</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-area="" asp-page="/Categories/Index">Category</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/Manufacturers/Index">Manufactuer</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/Products/Index">Product</a>
+                                <li class="nav-item">
+                                                            <a class=nav-link asp-page="/Cart/Index">
+                                                                <i class="bi bi-cart"></i>
+                                                            </a>
+                                                        </li>
 
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-page="">Users</a>
+                                <a class="dropdown-item" asp-area="" asp-page="">Roles</a>
+                            </div>
+                        </li>
                     </ul>
+                    <partial name="_LoginPartial" />  
                 </div>
             </div>
         </nav>
@@ -43,6 +49,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             <partial name="_Notification" />
+                  
             @RenderBody()
         </main>
     </div>

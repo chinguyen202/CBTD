@@ -11,13 +11,14 @@ namespace CBTD.Infrastructure
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-        }
+        } 
 
-        private IGenericRepository<Category> _Category;
-        private IGenericRepository<Manufacturer> _Manufacturer;
-        private IGenericRepository<Product> _Product;
+        private IGenericRepository<Category> _category;
+        private IGenericRepository<Manufacturer> _manufacturer;
+        private IGenericRepository<Product> _product;
+        private IGenericRepository<ShoppingCart> _shoppingCart;
 
-        private IGenericRepository<ApplicationUser> _ApplicationUser;
+        private IGenericRepository<ApplicationUser> _applicationUser;
         //ADD ADDITIONAL MODELS HERE
 
         public IGenericRepository<Category> Category
@@ -25,12 +26,12 @@ namespace CBTD.Infrastructure
             get
             {
 
-                if (_Category == null)
+                if (_category == null)
                 {
-                    _Category = new GenericRepository<Category>(_dbContext);
+                    _category = new GenericRepository<Category>(_dbContext);
                 }
 
-                return _Category;
+                return _category;
             }
         }
         public IGenericRepository<Manufacturer> Manufacturer
@@ -38,12 +39,12 @@ namespace CBTD.Infrastructure
             get
             {
 
-                if (_Manufacturer == null)
+                if (_manufacturer == null)
                 {
-                    _Manufacturer = new GenericRepository<Manufacturer>(_dbContext);
+                    _manufacturer = new GenericRepository<Manufacturer>(_dbContext);
                 }
 
-                return _Manufacturer;
+                return _manufacturer;
             }
         }
         public IGenericRepository<Product> Product
@@ -51,12 +52,12 @@ namespace CBTD.Infrastructure
             get
             {
 
-                if (_Product == null)
+                if (_product == null)
                 {
-                    _Product = new GenericRepository<Product>(_dbContext);
+                    _product = new GenericRepository<Product>(_dbContext);
                 }
 
-                return _Product;
+                return _product;
             }
         }
         
@@ -65,14 +66,28 @@ namespace CBTD.Infrastructure
             get
             {
 
-                if (_Category == null)
+                if (_applicationUser == null)
                 {
-                    _Category = new GenericRepository<Category>(_dbContext);
+                    _applicationUser = new GenericRepository<ApplicationUser>(_dbContext);
                 }
 
-                return _ApplicationUser;
+                return _applicationUser;
             }
         }
+        public IGenericRepository<ShoppingCart> ShoppingCart
+        {
+            get
+            {
+
+                if (_shoppingCart == null)
+                {
+                    _shoppingCart = new GenericRepository<ShoppingCart>(_dbContext);
+                }
+
+                return _shoppingCart;
+            }
+        }
+        
 
         // public IGenericRepository<Manufacturer> Manufacturer => throw new NotImplementedException();
 

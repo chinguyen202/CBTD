@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\CBTD.Utility\CBTD.Utility.csproj" />
   </ItemGroup>
 
   

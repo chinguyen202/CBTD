@@ -2,6 +2,7 @@ using CBTD.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using CBTD.DataAccess.Data;
+using CBTD.DataAccess.Models;
 
 namespace CBTD.Infrastructure
 {
@@ -193,6 +194,18 @@ namespace CBTD.Infrastructure
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.SaveChanges();
+        }
+
+        public int IncrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count -= count;
+            return shoppingCart.Count;
+        }
+
+        public int DecrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count += count;
+            return shoppingCart.Count;
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null, Expression<Func<T, int>> orderBy = null, string includes = null)

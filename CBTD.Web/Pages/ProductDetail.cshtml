@@ -5,24 +5,26 @@
 
 
 <form method="post">
-	<input hidden @Model.objProduct.Id />
+	<input hidden asp-for="@Model.ObjProduct.Id" />
+    <input hidden asp-for="@Model.ObjCart.Id" />
+
 	<div class="card  container pt-4">
 		<div class="card-header bg-primary text-light ml-0  row ">
 			<div class="col-12 col-md-6">
-				<h1 class="text-white-50">@Model.objProduct.Name</h1>
+				<h1 class="text-white-50">@Model.ObjProduct.Name</h1>
 				<p class="text-purple">
-					@if (Model.objProduct.Manufacturer != null)
+					@if (Model.ObjProduct.Manufacturer != null)
 					{
-						@Model.objProduct.Manufacturer.Name
+						@Model.ObjProduct.Manufacturer.Name
 					}
 				</p>
 			</div>
 			<div class="col-12 col-md-6 text-end pt-4">
-				<span class="badge bg-info pt-2" style="height:30px;">@Model.objProduct.Size</span>
+				<span class="badge bg-info pt-2" style="height:30px;">@Model.ObjProduct.Size</span>
 				<span class="badge bg-warning pt-2" style="height:30px;">
-					@if (Model.objProduct.Category != null)
+					@if (Model.ObjProduct.Category != null)
 					{
-						@Model.objProduct.Category.Name
+						@Model.ObjProduct.Category.Name
 					}
 				</span>
 			</div>
@@ -33,13 +35,13 @@
 					<div class="col-8 col-lg-8">
 
 						<div class="row pl-2">
-							<h5 class="text-muted">UPC: @Model.objProduct.UPC</h5>
+							<h5 class="text-muted">UPC: @Model.ObjProduct.UPC</h5>
 						</div>
 						<div class="row pl-2">
-							<p class="text-secondary">@Model.objProduct.Description</p>
+							<p class="text-secondary">@Model.ObjProduct.Description</p>
 						</div>
 						<div class="row pl-2">
-							<h5 class="text-muted pb-2">List Price: €<strike>@Model.objProduct.UnitPrice</strike></h5>
+							<h5 class="text-muted pb-2">List Price: €<strike>@Model.ObjProduct.UnitPrice</strike></h5>
 
 						</div>
 						<div class="row text-center pl-2">
@@ -61,13 +63,13 @@
 								<div>Price</div>
 							</div>
 							<div class="p-1 col-2 bg-secondary">
-								<div>€@Model.objProduct.UnitPrice</div>
+								<div>€@Model.ObjProduct.UnitPrice</div>
 							</div>
 							<div class="p-1 col-2 bg-secondary">
-								<div>€@Model.objProduct.HalfDozenPrice</div>
+								<div>€@Model.ObjProduct.HalfDozenPrice</div>
 							</div>
 							<div class="p-1 col-2 bg-secondary">
-								<div>€@Model.objProduct.DozenPrice</div>
+								<div>€@Model.ObjProduct.DozenPrice</div>
 							</div>
 							<br /><br />
 						</div>
@@ -76,12 +78,12 @@
 							<div class="col-8 text-primary"></div>
 							<div class="col-2 text-primary"><h4>Count</h4></div>
 							<div class="col-2">
-								@*   <input asp-for="Count" class="form-control" />*@
+								<input asp-for="TxtCount" class="form-control" />
 							</div>
 						</div>
 					</div>
 					<div class="col-12 col-lg-3 offset-lg-1 text-center">
-						<img src="@Model.objProduct.ImageUrl" alt="Product image" width="100%" class="rounded" /> 
+						<img src="@Model.ObjProduct.ImageUrl" alt="Product image" width="100%" class="rounded" /> 
 					</div>
 				</div>
 			</div>
@@ -92,7 +94,19 @@
 					<a class="btn btn-success form-control " style="height:50px;" asp-page="Index">Back to Home</a>
 				</div>
 				<div class="col-12 col-md-6 pb-1">
-					<button type="submit" value="Add to Cart" class="btn btn-primary form-control" style="height:50px;">Add to Cart</button>
+					@if (TempData["UserLoggedIn"] != null)
+                    				{
+                    					<div class="col-12 col-md-6 pb-1">
+                    						<button type="submit" value="Add to Cart" class="btn btn-primary form-control" style="height:50px;">Add to Cart</button>
+                    					</div>
+                    				}
+                    				else
+                    				{
+                    					<div class="col-12 col-md-6 pb-1">
+                    						<a class="btn btn-danger form-control" style="height:50px" asp-area="Identity" asp-page="/Account/Login">Login to Add to Cart</a>
+                    					</div>
+                    				}
+
 				</div>
 			</div>
 		</div>
