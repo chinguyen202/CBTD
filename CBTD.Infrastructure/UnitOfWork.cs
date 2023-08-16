@@ -20,6 +20,7 @@ namespace CBTD.Infrastructure
         private IGenericRepository<ShoppingCart> _shoppingCart;
         private IGenericRepository<ApplicationUser> _applicationUser;
         public IOrderHeaderRepository<OrderHeader> OrderHeader { get; set; }
+        public IGenericRepository<OrderDetails> OrderDetails { get; set; }
 
         //ADD ADDITIONAL MODELS HERE
 

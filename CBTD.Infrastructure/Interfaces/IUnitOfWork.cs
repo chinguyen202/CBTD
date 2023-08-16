@@ -11,6 +11,7 @@ namespace CBTD.Infrastructure.Interfaces
         
         public IGenericRepository<ShoppingCart> ShoppingCart { get; }
         public IOrderHeaderRepository<OrderHeader> OrderHeader { get; set; }
+        public IGenericRepository<OrderDetails> OrderDetails { get; set; }
 
 
 	    //ADD other Models/Tables here as you create them
