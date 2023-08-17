@@ -4,23 +4,23 @@ using CBTD.Infrastructure.Interfaces;
 
 namespace CBTD.Infrastructure
 {
-    public class UnitOfWork : IUnitOfWork
+     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _dbContext;  //dependency injection of Data Source
-        private readonly OrderHeaderRepository _orderHeader;
+
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _orderHeader = new OrderHeaderRepository(_dbContext);
-        } 
+        }
 
-        private IGenericRepository<Category> _category;
-        private IGenericRepository<Manufacturer> _manufacturer;
-        private IGenericRepository<Product> _product;
-        private IGenericRepository<ShoppingCart> _shoppingCart;
-        private IGenericRepository<ApplicationUser> _applicationUser;
-        public IOrderHeaderRepository<OrderHeader> OrderHeader { get; set; }
-        public IGenericRepository<OrderDetails> OrderDetails { get; set; }
+        private IGenericRepository<Category> _Category;
+        private IGenericRepository<Manufacturer> _Manufacturer;
+        private IGenericRepository<Product> _Product;
+        private IGenericRepository<ApplicationUser> _ApplicationUser;
+        private IGenericRepository<ShoppingCart> _ShoppingCard;
+        private IOrderHeaderRepository<OrderHeader> _OrderHeader;
+        private IGenericRepository<OrderDetails> _OrderDetails;
+
 
         //ADD ADDITIONAL MODELS HERE
 
@@ -29,74 +29,95 @@ namespace CBTD.Infrastructure
             get
             {
 
-                if (_category == null)
+                if (_Category == null)
                 {
-                    _category = new GenericRepository<Category>(_dbContext);
+                    _Category = new GenericRepository<Category>(_dbContext);
                 }
 
-                return _category;
+                return _Category;
             }
         }
+
         public IGenericRepository<Manufacturer> Manufacturer
         {
             get
             {
 
-                if (_manufacturer == null)
+                if (_Manufacturer == null)
                 {
-                    _manufacturer = new GenericRepository<Manufacturer>(_dbContext);
+                    _Manufacturer = new GenericRepository<Manufacturer>(_dbContext);
                 }
 
-                return _manufacturer;
+                return _Manufacturer;
             }
         }
+
         public IGenericRepository<Product> Product
         {
             get
             {
 
-                if (_product == null)
+                if (_Product == null)
                 {
-                    _product = new GenericRepository<Product>(_dbContext);
+                    _Product = new GenericRepository<Product>(_dbContext);
                 }
 
-                return _product;
+                return _Product;
             }
         }
-        
+
         public IGenericRepository<ApplicationUser> ApplicationUser
         {
             get
             {
 
-                if (_applicationUser == null)
+                if (_ApplicationUser == null)
                 {
-                    _applicationUser = new GenericRepository<ApplicationUser>(_dbContext);
+                    _ApplicationUser = new GenericRepository<ApplicationUser>(_dbContext);
                 }
 
-                return _applicationUser;
+                return _ApplicationUser;
             }
         }
+
         public IGenericRepository<ShoppingCart> ShoppingCart
         {
             get
             {
-
-                if (_shoppingCart == null)
+                if (_ShoppingCard == null)
                 {
-                    _shoppingCart = new GenericRepository<ShoppingCart>(_dbContext);
+                    _ShoppingCard = new GenericRepository<ShoppingCart>(_dbContext);
                 }
 
-                return _shoppingCart;
+                return _ShoppingCard;
             }
         }
 
+        public IOrderHeaderRepository<OrderHeader> OrderHeader
+        {
+            get
+            {
+                if (_OrderHeader == null)
+                {
+                    _OrderHeader = new OrderHeaderRepository(_dbContext);
+                }
 
+                return _OrderHeader;
+            }
+        }
 
-        // public IGenericRepository<Manufacturer> Manufacturer => throw new NotImplementedException();
+        public IGenericRepository<OrderDetails> OrderDetails
+        {
+            get
+            {
+                if (_OrderDetails == null)
+                {
+                    _OrderDetails = new GenericRepository<OrderDetails>(_dbContext);
+                }
 
-        // public IGenericRepository<Product> Product => throw new NotImplementedException();
-
+                return _OrderDetails;
+            }
+        }
         //ADD ADDITIONAL METHODS FOR EACH MODEL (similar to Category) HERE
 
         public int Commit()
@@ -116,5 +137,4 @@ namespace CBTD.Infrastructure
             _dbContext.Dispose();
         }
     }
-
 }

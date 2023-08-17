@@ -5,10 +5,11 @@ namespace CBTD.Infrastructure.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        // Get object by its key id
-		T GetById(int? id);
 
-		/* The following method will return a set of objects using an Expression filter (similar to a WHERE clause in SQL)
+        // Get object by its key id
+        T GetById(int? id);
+
+        /* The following method will return a set of objects using an Expression filter (similar to a WHERE clause in SQL)
          Func<T, bool> represents a function that takes an object of generic type T and returns a bool on whether filter exists or not*
          Expression<Func<T>> is a description of a function as an expression tree.
          https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/expression-trees-explained
@@ -20,35 +21,34 @@ namespace CBTD.Infrastructure.Interfaces
 
          Includes is used similarly to a SQL JOIN to “connect and relate to” other objects (PK-FK)
           */
-		T Get(Expression<Func<T, bool>> predicate, bool asNotTracking = false, string includes = null);
+        T Get(Expression<Func<T, bool>> predicate, bool asNotTracking = false, string includes = null);
 
-		//Same as Get but Async call
-		Task<T> GetAsync(Expression<Func<T, bool>> predicate, bool asNotTracking = false, string includes = null);
+        //Same as Get but Async call
+        Task<T> GetAsync(Expression<Func<T, bool>> predicate, bool asNotTracking = false, string includes = null);
 
-		// Returns an Enumerable list of results to iterate through.
-		// Expression is the same as before (WHERE clause)
-		// A second Expression is added for Order By
-		// Includes allows JOINS
-		IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null, Expression<Func<T, int>> orderBy = null, string includes = null);
+        // Returns an Enumerable list of results to iterate through.
+        // Expression is the same as before (WHERE clause)
+        // A second Expression is added for Order By
+        // Includes allows JOINS
+        IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null, Expression<Func<T, int>> orderBy = null, string includes = null);
 
-		// Same as above but Asynchronous action
-		Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Expression<Func<T, int>> orderBy = null, string includes = null);
+        // Same as above but Asynchronous action
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Expression<Func<T, int>> orderBy = null, string includes = null);
 
-		// Add (Insert) a new record instance
-		void Add(T entity);
+        // Add (Insert) a new record instance
+        void Add(T entity);
 
-		// Delete (Remove) a single record instance
-		void Delete(T entity);
+        // Delete (Remove) a single record instance
+        void Delete(T entity);
 
-		// Delete (Remove) multiple record instances
-		void Delete(IEnumerable<T> entities);
+        // Delete (Remove) multiple record instances
+        void Delete(IEnumerable<T> entities);
 
-		// Update all changes to an object
-		void Update(T entity);
-        
-		// Increment and Decrement Shopping Cart
-		int IncrementCount(ShoppingCart shoppingCart, int count);
-		int DecrementCount(ShoppingCart shoppingCart, int count);
+        // Update all changes to an object
+        void Update(T entity);
+
+        int IncrementCount(ShoppingCart shoppingCart, int count);
+        int DecrementCount(ShoppingCart shoppingCart, int count);
 
     }
 }

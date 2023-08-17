@@ -6,16 +6,17 @@ using CBTD.DataAccess.Models;
 
 namespace CBTD.Infrastructure
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         // By using ReadOnly ApplicationDbContext, you can have access to only
         // querying capabilities of DbContext. UnitOfWork actually writes
         // (commits) to the PHYSICAL tables (not internal object).
         private readonly ApplicationDbContext _dbContext;
+
         public GenericRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-           
+
         }
 
         public void Add(T entity)
@@ -40,7 +41,7 @@ namespace CBTD.Infrastructure
         {
             if (includes == null)   // we are not joining any objects
             {
-                if (trackChanges) // is set to false, we do not want EF tracking changes
+                if (!trackChanges) // is set to false, we do not want EF tracking changes
                 {
                     return _dbContext.Set<T>()
                       .Where(predicate)
@@ -66,7 +67,7 @@ namespace CBTD.Infrastructure
                     queryable = queryable.Include(includeProperty);
                 }
 
-                if (trackChanges) // is set to false, we're not tracking changes
+                if (!trackChanges) // is set to false, we're not tracking changes
                 {
                     return queryable
                       .Where(predicate)
@@ -87,7 +88,7 @@ namespace CBTD.Infrastructure
         {
             if (includes == null)   // we are not joining any objects
             {
-                if (trackChanges) // is set to false, we're not tracking changes
+                if (!trackChanges) // is set to false, we're not tracking changes
                 {
                     return await _dbContext.Set<T>()
                       .Where(predicate)
@@ -113,7 +114,7 @@ namespace CBTD.Infrastructure
                     queryable = queryable.Include(includeProperty);
                 }
 
-                if (trackChanges) // is set to false, EF is not tracking changes
+                if (!trackChanges) // is set to false, EF is not tracking changes
                 {
                     return await queryable
                       .Where(predicate)
@@ -196,18 +197,6 @@ namespace CBTD.Infrastructure
             _dbContext.SaveChanges();
         }
 
-        public int IncrementCount(ShoppingCart shoppingCart, int count)
-        {
-            shoppingCart.Count -= count;
-            return shoppingCart.Count;
-        }
-
-        public int DecrementCount(ShoppingCart shoppingCart, int count)
-        {
-            shoppingCart.Count += count;
-            return shoppingCart.Count;
-        }
-
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null, Expression<Func<T, int>> orderBy = null, string includes = null)
         {
             IQueryable<T> queryable = _dbContext.Set<T>();
@@ -253,5 +242,19 @@ namespace CBTD.Infrastructure
 
         }
 
+        public int DecrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count -= count;
+            return shoppingCart.Count;
+        }
+
+        public int IncrementCount(ShoppingCart shoppingCart, int count)
+        {
+            shoppingCart.Count += count;
+            return shoppingCart.Count;
+        }
+
+
     }
+
 }

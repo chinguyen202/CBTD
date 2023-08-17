@@ -10,26 +10,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
-    builder.Configuration.GetConnectionString("PostgresConnection")
-));
-// Application cookies
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    {
+        options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"));
+
+    });
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped<DbInitializer>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+builder.Services.AddScoped<UnitOfWork>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = $"/Identity/Account/Login";
     options.LogoutPath = $"/Identity/Account/Logout";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
-// User identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddScoped<DbInitializer>();
-builder.Services.AddSingleton<IEmailSender, EmailSender>();
-
-builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -47,10 +47,9 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-// Seed the database
 SeedDatabase();
-app.Run();
 
+app.Run();
 
 void SeedDatabase()
 {
@@ -58,4 +57,3 @@ void SeedDatabase()
     var dbInitializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
     dbInitializer.Initialize();
 }
-

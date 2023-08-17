@@ -18,7 +18,7 @@ public class EmailSender: IEmailSender
     public Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
         var emailToSend = new MimeMessage();
-        emailToSend.From.Add(MailboxAddress.Parse("rich@richfry.com"));
+        emailToSend.From.Add(MailboxAddress.Parse("chi.nguyen@integrify.io"));
         emailToSend.To.Add(MailboxAddress.Parse(email));
         emailToSend.Subject = subject;
         emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlMessage };

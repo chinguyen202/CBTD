@@ -64,11 +64,10 @@ public class DbInitializer
                 City = "Ogden"
             }, "Admin123*").GetAwaiter().GetResult();
 
-            ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "chinguy@metropolia.fi");
-
+            ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u =>string.Compare(u.Email, "chinguy@metropolia.fi") == 0);
+            Console.WriteLine(user.Email);
             _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
-	
-
+            
 	        //Now continue with your tables
 
             var categories = new List<Category>
